@@ -7,7 +7,7 @@ library(readr)
 library(tidyverse)
 library(dplyr)
 library(survey)
-library(qwraps2)
+library(poliscidata)
 gss <- read_csv("gss.csv")
 gss_cleaned <- gss %>%
   select(feelings_life,income_family,own_rent,average_hours_worked) %>%
