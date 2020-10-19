@@ -76,14 +76,18 @@ From the coefficients table we know the equation with the base being income of l
 $25000, own/rent status is idk, and avg hours worked = 0 is the following:
 
 $$
-FeelingsOfLife = 6.29 + 0.37x_{income1} + 0.54x_{income2} + 0.62x_{income3} 
-+ 0.62x_{income4} + 0.62x_{income5} \\
+FeelingsOfLife = 6.29 + 0.37x_{income_1} + 0.54x_{income_2} + 0.62x_{income_3} 
++ 0.62x_{income_4} + 0.62x_{income_5} \\
 + 0.45x_{own} + 0.09x_{rent} \\
-+ 0.91x_{work1} + 0.87x_{work2} + 0.95x_{work3} + 1.01x_{work4} + 0.98x_{work5}
++ 0.91x_{work_1} + 0.87x_{work_2} + 0.95x_{work_3} + 1.01x_{work_4} + 0.98x_{work_5}
 $$
 
 The adjusted r square is 0.043 suggests we have a very inaccurate model but it could just be from the fact we
 have so many predictor variables. So performing an MSE we have 2.59 
+
+$$
+FeelingsOfLife = \beta + \beta_1 x_{income_i} + \beta_2 x_{own_i} + \beta_3 x_{work_i}
+$$
 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
