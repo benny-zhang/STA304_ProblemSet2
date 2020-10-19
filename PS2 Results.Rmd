@@ -8,6 +8,7 @@ library(tidyverse)
 library(dplyr)
 library(survey)
 library(poliscidata)
+library(ggplot2)
 gss <- read_csv("gss.csv")
 gss_cleaned <- gss %>%
   select(feelings_life,income_family,own_rent,average_hours_worked) %>%
@@ -87,12 +88,6 @@ have so many predictor variables. So performing an MSE we have 2.59
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
-summ <- list("Feelings of Life" = 
-               list("Min" = min(gss_cleaned$feelings_life),
-                    "Max" = max(gss_cleaned$feelings_life),
-                    "Mean" = mean(gss_cleaned$feelings_life),
-                    "Median" = median(gss_cleaned$feelings_life)))
-
 x <- data.frame("Stats" = c("Min", "Max", "Mean", "Median"),
                 "Numbers" = c(min(gss_cleaned$feelings_life),
                               max(gss_cleaned$feelings_life),
@@ -106,16 +101,52 @@ setNames(data.frame(table(gss_cleaned$average_hours_worked)), c("Average Hours W
 
 ```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 
 
 
+incomenum = c(0.37389,0.54493,0.62581,0.75909,0.80657)
+incomename = c("25k - 50k","50k - 75k",
+               "75k - 100k", "100k - 125k",
+               "125k +")
+
+dat1 <- data.frame("income_range" = incomename,
+                   "income_weight" = incomenum)
+
+dat1$income_range <- factor(dat1$income_range, levels = c("25k - 50k","50k - 75k",
+               "75k - 100k", "100k - 125k",
+               "125k +"))
+ 
+ggplot(data = dat1, aes(x = income_range, y = income_weight)) +
+  geom_bar(stat="identity", fill = "red") +
+  labs(title = "Comparison between the coefficients of the income categories", 
+       x = "Income Family",
+       y = "Coefficient from Model")
 
 
+dat2 <- data.frame("own_rent" = c("Own", "Rent"),
+                   "coefficients" = c(0.44886, 0.09092))
 
+ggplot(data = dat2, aes(x = own_rent, y = coefficients)) +
+  geom_bar(stat="identity", fill = "red") +
+  labs(title = "Comparison between the coefficients of owning and renting", 
+       x = "Own/Rent",
+       y = "Coefficient from Model")
 
+dat3 <- data.frame("hr" = c("0.1 to 29.9 hours",
+                            "30.0 to 40.0 hours",
+                            "40.1 to 50.0 hours",
+                            "50.1 hours and more",
+                            "Don't know"),
+                   "coefficients2" = c(0.90671,0.86671,0.95304,1.01095,0.97984))
 
+ggplot(data = dat3, aes(x = hr, y = coefficients2)) +
+  geom_bar(stat="identity", fill = "red") +
+  labs(title = "Comparison between the coefficients of the working hours categories", 
+       x = "Average Working Hours",
+       y = "Coefficient from Model")
 
-
+```
 
 
 
